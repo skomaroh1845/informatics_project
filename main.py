@@ -1,8 +1,8 @@
 import pygame
-import sys
+import controls
+from star_ship import StarShip
 
-# print ('5')
-
+# + Nick 07 05
 # функция запуска игры
 def run():
     # инициализация
@@ -10,15 +10,17 @@ def run():
     screen = pygame.display.set_mode((700, 700))
     pygame.display.set_caption("Space defenders")
     bg_color = (0, 0, 0)
+    ship = StarShip(screen)
 
     # цикл
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
+        controls.events(ship)
+        ship.update_ship()
         screen.fill(bg_color)
+        ship.output()
         pygame.display.flip()
 
 
 if __name__ == '__main__':
     run()
+# - Nick 07 05
