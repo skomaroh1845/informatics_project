@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+# print ('5')
+
 # функция запуска игры
 def run():
     # инициализация
