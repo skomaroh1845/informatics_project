@@ -31,7 +31,6 @@ def events(screen, ship, bullets):  # Nick 08 05 added parameters: screen, bulle
 # - Nick 07 05
 
 # + Dima 08 05
-
 # функция, делающая обновление экрана
 def update (bg_color, screen, ship, bullets):  # Nick 08 05 added parameters: screen, bullets
     screen.fill(bg_color)
@@ -41,5 +40,11 @@ def update (bg_color, screen, ship, bullets):  # Nick 08 05 added parameters: sc
     # - Nick 08 05
     ship.output()
     pygame.display.flip()
-
 # - Dima 08 05
+
+
+# + Nick 08 05
+# создание армии пришельцев
+def create_army(screen, aliens):
+    pass
+# - Nick 08 05
