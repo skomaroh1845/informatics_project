@@ -1,10 +1,12 @@
 import pygame
 import sys
-
+# + Nick 08 05
+from bullet import Bullet
+# - Nick 08 05
 
 # обработка событий
 # + Nick 07 05
-def events(ship):
+def events(screen, ship, bullets):  # Nick 08 05 added parameters: screen, bullets
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -14,6 +16,11 @@ def events(ship):
                 ship.mright = True
             if event.key == pygame.K_a:
                 ship.mleft = True
+            # + Nick 08 05
+            if event.key == pygame.K_SPACE:
+                new_bullet = Bullet(screen, ship)
+                bullets.add(new_bullet)
+            # - Nick 08 05
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
                 ship.mright = False
@@ -26,8 +33,12 @@ def events(ship):
 # + Dima 08 05
 
 # функция, делающая обновление экрана
-def update (bg_color, screen, ship):
+def update (bg_color, screen, ship, bullets):  # Nick 08 05 added parameters: screen, bullets
     screen.fill(bg_color)
+    # + Nick 08 05
+    for bullet in bullets.sprites():
+        bullet.draw_bullet()
+    # - Nick 08 05
     ship.output()
     pygame.display.flip()
 
