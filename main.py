@@ -1,22 +1,31 @@
 import pygame
 import controls
 from star_ship import StarShip
+# + Nick 08 05
+from pygame.sprite import Group
+# - Nick 08 05
 
 # + Nick 07 05
 # функция запуска игры
 def run():
     # инициализация
     pygame.init()
-    screen = pygame.display.set_mode((700, 500))  # Dima changed: так у меня помещается окно на компе
+    screen = pygame.display.set_mode((500, 500))  # Dima changed: так у меня помещается окно на компе
     pygame.display.set_caption("Space defenders")
     bg_color = (0, 0, 0)
     ship = StarShip(screen)
+    # + Nick 08 05
+    bullets = Group()
+    # - Nick 08 05
 
     # цикл
     while True:
-        controls.events(ship)
+        controls.events(screen, ship, bullets)
         ship.update_ship()
-        controls.update(bg_color, screen, ship)
+        # + Nick 08 05
+        bullets.update()
+        # - Nick 08 05
+        controls.update(bg_color, screen, ship, bullets)
 
 
 if __name__ == '__main__':
