@@ -18,6 +18,11 @@ def run():
     bullets = Group()
     # - Nick 08 05
 
+    # + Dima 09 05
+    aliens = Group()
+    controls.create_army(screen, aliens)
+    # - Dima 09 05
+
     # цикл
     while True:
         controls.events(screen, ship, bullets)
@@ -25,7 +30,7 @@ def run():
         # + Nick 08 05
         bullets.update()
         # - Nick 08 05
-        controls.update(bg_color, screen, ship, bullets)
+        controls.update(bg_color, screen, ship, bullets, aliens)
 
 
 if __name__ == '__main__':
