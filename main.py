@@ -31,6 +31,10 @@ def run():
         bullets.update()
         # - Nick 08 05
         controls.update(bg_color, screen, ship, bullets, aliens)
+        # + Dima 09 05
+        controls.update_bullets(bullets)
+        controls.update_aliens(aliens)
+        # + Dima 09 05
 
 
 if __name__ == '__main__':
