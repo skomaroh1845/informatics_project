@@ -48,6 +48,20 @@ def update (bg_color, screen, ship, bullets, aliens):  # Nick 08 05 added parame
     pygame.display.flip()
 # - Dima 08 05
 
+# + Dima 09 05
+def update_bullets (bullets):
+    # обновляет позиции пуль и удаляет их
+    bullets.update()
+    for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)
+# - Dima 09 05
+
+# + Dima 09 05
+def update_aliens (aliens):
+    # обновляет позиции пуль и удаляет их
+    aliens.update()
+# - Dima 09 05
 
 # + Nick 08 05
 # создание армии пришельцев
@@ -56,12 +70,17 @@ def create_army(screen, aliens):
     alien = Alien(screen)
     alien_width = alien.rect.width
     number_alien_x = int((500 - 2*alien_width)/alien_width)
+    alien_height = alien.rect.height
+    number_alien_y = int((500 - 52 - 2*alien_height) / alien_height)
+    for row_number in range(number_alien_y):
+        for alien_number in range(number_alien_x):
+            alien = Alien(screen)
+            alien.x = alien_width + alien_width * alien_number
+            alien.y = alien_height + alien_height * row_number
+            alien.rect.x = alien.x
+            alien.rect.y = alien.rect.height + alien.rect.height*row_number
 
-    for alien_number in range(number_alien_x):
-        alien = Alien(screen)
-        alien.x = alien_width + alien_width * alien_number
-        alien.rect.x = alien.x
-        aliens.add(alien)
+            aliens.add(alien)
 
 
     # - Dima 09 05
