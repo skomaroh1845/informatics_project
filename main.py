@@ -1,9 +1,9 @@
 import pygame
 import controls
 from star_ship import StarShip
-# + Nick 08 05
 from pygame.sprite import Group
-# - Nick 08 05
+from game_stats import Stats
+
 
 # + Nick 07 05
 # функция запуска игры
@@ -23,6 +23,13 @@ def run():
     controls.create_army(screen, aliens)
     # - Dima 09 05
 
+    # + Nick 10 05
+    # для задания скорости обновления
+    clock = pygame.time.Clock()
+    # статистика
+    stats = Stats()
+    # - Nick 10 05
+
     # цикл
     while True:
         controls.events(screen, ship, bullets)
@@ -32,9 +39,12 @@ def run():
         # - Nick 08 05
         controls.update(bg_color, screen, ship, bullets, aliens)
         # + Dima 09 05
-        controls.update_bullets(bullets)
-        controls.update_aliens(aliens)
+        controls.update_bullets(aliens, bullets)
+        controls.update_aliens(ship, aliens, stats, bullets, screen)
         # + Dima 09 05
+        # + Nick 10 05
+        clock.tick(60)  # 60 FPS
+        # - Nick 10 05
 
 
 if __name__ == '__main__':
