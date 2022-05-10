@@ -30,6 +30,10 @@ def run():
     stats = Stats()
     # - Nick 10 05
 
+    # + Nick 12 05
+    bonuses = Group()
+    # - Nick 12 05
+
     # цикл
     while True:
         controls.events(screen, ship, bullets)
@@ -37,10 +41,10 @@ def run():
         # + Nick 08 05
         bullets.update()
         # - Nick 08 05
-        controls.update(bg_color, screen, ship, bullets, aliens)
+        controls.update(bg_color, screen, ship, bullets, aliens, bonuses, stats)
         # + Dima 09 05
-        controls.update_bullets(aliens, bullets)
-        controls.update_aliens(ship, aliens, stats, bullets, screen)
+        controls.update_bullets(aliens, bullets, screen, bonuses)
+        controls.update_aliens(ship, aliens, stats, bullets, screen, bonuses)
         # + Dima 09 05
         # + Nick 10 05
         clock.tick(60)  # 60 FPS

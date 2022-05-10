@@ -4,14 +4,14 @@ import pygame
 class Bullet(pygame.sprite.Sprite):
 
     # создание пули в позиции пушки
-    def __init__(self, screen, ship):
+    def __init__(self, screen, ship, shift=0):
         super(Bullet, self).__init__()
         self.screen = screen
-        self.rect = pygame.Rect(0, 0, 2, 12)
+        self.rect = pygame.Rect(0, 0, 3, 10)
         self.color = 255, 153, 0
         self.speed = 5
-        self.rect.centerx = ship.rect.centerx
-        self.rect.top = ship.rect.top
+        self.rect.centerx = ship.rect.centerx + shift
+        self.rect.top = ship.rect.top + abs(shift)
         self.y = float(self.rect.y)
 
     def update(self):
