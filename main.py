@@ -31,6 +31,10 @@ def run():
     stats = Stats()
     # - Nick 10 05
 
+    # + Nick 12 05
+    bonuses = Group()
+    # - Nick 12 05
+
     # + Dima 11 05
     sc = Scores(screen, stats)
     # - Dima 11 05
@@ -44,10 +48,10 @@ def run():
             # + Nick 08 05
             bullets.update()
             # - Nick 08 05
-            controls.update(bg_color, screen, ship, bullets, aliens, stats, sc)
+            controls.update(bg_color, screen, ship, bullets, aliens, stats, sc, bonuses)
             # + Dima 09 05
-            controls.update_bullets(screen, aliens, bullets, stats,  sc)
-            controls.update_aliens(ship, aliens, stats, bullets, screen, sc)
+            controls.update_bullets(screen, aliens, bullets, stats,  sc, bonuses)
+            controls.update_aliens(ship, aliens, stats, bullets, screen, sc, bonuses)
             # + Dima 09 05
             # + Nick 10 05
             clock.tick(60)  # 60 FPS

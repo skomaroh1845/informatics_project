@@ -16,6 +16,7 @@ class StarShip(Sprite):
         self.rect.bottom = self.screen_rect.bottom
         self.mright = False
         self.mleft = False
+        self.bonus_guns = 0
 
     # рисование пушки
     def output(self):
