@@ -1,12 +1,14 @@
 import pygame
+from pygame.sprite import Sprite
 
 # + Nick 07 05
-class StarShip():
+class StarShip(Sprite):
 
     # инициализация
     def __init__(self, screen):
+        super(StarShip, self).__init__()
         self.screen = screen
-        self.image = pygame.image.load('images/star_ship.png')
+        self.image = pygame.image.load('images/star_ship_small.png')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx

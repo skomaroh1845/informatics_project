@@ -3,8 +3,13 @@ import sys
 from bullet import Bullet
 from alien import Alien
 import time
+# by Nick branch
 from random import randint
 from bonuses import Bonus
+# -------
+# by Dmitrii branch
+from game_stats import Stats
+# -------
 
 
 # обработка событий
@@ -42,8 +47,9 @@ def events(screen, ship, bullets):
 
 # + Dima 08 05
 # функция, делающая обновление экрана
-def update (bg_color, screen, ship, bullets, aliens, bonuses, stats):
+def update (bg_color, screen, ship, bullets, aliens, stats, sc, bonuses):  # Nick 08 05 added parameters: screen, bullets
     screen.fill(bg_color)
+    sc.show_score()
     # + Nick 08 05
     for bullet in bullets.sprites():
         bullet.draw_bullet()
@@ -64,7 +70,7 @@ def update (bg_color, screen, ship, bullets, aliens, bonuses, stats):
 # - Dima 08 05
 
 # + Dima 09 05
-def update_bullets (aliens, bullets, screen, bonuses):
+def update_bullets (screen, aliens, bullets, stats, sc, bonuses):
     # обновляет позиции пуль и удаляет их
     bullets.update()
     for bullet in bullets.copy():
@@ -72,6 +78,7 @@ def update_bullets (aliens, bullets, screen, bonuses):
             bullets.remove(bullet)
     # + Nick 10 05
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+
     # + Nick 12 05
     for alien_list in collisions.values():
         for alien in alien_list:
@@ -82,24 +89,47 @@ def update_bullets (aliens, bullets, screen, bonuses):
                 new_bonus = Bonus(screen, alien.rect.centerx, alien.y, 'super_gun')
                 bonuses.add(new_bonus)
     # - Nick 12 05
+
+    # + Dima 11 05
+    if collisions:
+        for aliens in collisions.values():
+            stats.score += 10*len(aliens)
+        sc.image_score()
+        check_high_score(stats, sc)
+        sc.image_ships()
+    # - Dima 11 05
+
     # если всех убили, создаем новых
     if len(aliens) == 0:
-        pass  # дописать 
+        # + Dima 11 05
+        bullets.empty()
+        create_army(screen, aliens)
+        # - Dima 11 05
 
     # - Nick 10 05
 # - Dima 09 05
 
 # + Dima 09 05
-def update_aliens (ship, aliens, stats, bullets, screen, bonuses):
+def update_aliens (ship, aliens, stats, bullets, screen, sc, bonuses):
     # обновляет позиции пришельцев
     aliens.update()
     # + Nick 10 05
     for alien in aliens:
         if pygame.sprite.collide_mask(ship, alien):
-            ship_death(stats, aliens, screen, ship, bullets, bonuses)
-    aliens_check(stats, screen, ship, aliens, bullets)
+            ship_death(stats, aliens, screen, ship, bullets, sc, bonuses)
+    aliens_check(stats, aliens, screen, ship, bullets, sc)
     # - Nick 10 05
 # - Dima 09 05
+
+# + Dima 11 05
+# проверяем, добрался ли хоть кто-то до края экрана
+def aliens_check (stats, aliens, screen, ship, bullets, sc):
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            ship_death(stats, aliens, screen, ship, bullets, sc)
+            break
+# - Dima 11 05
 
 # + Nick 08 05
 # создание армии пришельцев
@@ -129,22 +159,6 @@ def create_army(screen, aliens):
 
 # + Nick 10 05
 # столкновение пришельцев с кораблем
-def ship_death(stats, aliens, screen, ship, bullets, bonuses):
-    stats.lifes -= 1
-    ship.bonus_guns = 0
-    time.sleep(1)
-    bonuses.empty()
-    bullets.empty()
-    aliens.empty()
-    create_army(screen, aliens)
-    ship.reset()
-
-# проверка, дошли ли пришельцы до края
-def aliens_check(stats, screen, ship, aliens, bullets):
-    pass
-
-# - Nick 10 05
-
 # + Nick 12 05
 def bonuses_catch(ship, bonuses, stats):
     for bonus in bonuses:
@@ -159,3 +173,32 @@ def bonuses_catch(ship, bonuses, stats):
                     ship.bonus_guns = 20
             bonuses.remove(bonus)
 # - Nick 12 05
+=======
+def ship_death(stats, aliens, screen, ship, bullets, sc, bonuses):
+    # + Dima 11 05
+    if (stats.lifes > 0):
+        stats.lifes -= 1
+        ship.bonus_guns = 0
+        time.sleep(1)
+        bonuses.empty()
+        bullets.empty()
+        aliens.empty()
+        create_army(screen, aliens)
+        ship.reset()
+        sc.image_ships()
+    else:
+        stats.run_game = False
+        sys.exit()
+    # - Dima 11 05
+
+# - Nick 10 05
+
+# + Dima 11 05
+def check_high_score(stats, sc):
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        sc.image_high_score()
+        with open('highscore.txt', 'w') as f:
+            f.write(str(stats.high_score))
+# - Dima 11 05
+
