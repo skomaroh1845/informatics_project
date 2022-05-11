@@ -11,7 +11,6 @@ from bonuses import Bonus
 from game_stats import Stats
 # -------
 
-
 # обработка событий
 # + Nick 07 05
 def events(screen, ship, bullets):
@@ -63,7 +62,7 @@ def update (bg_color, screen, ship, bullets, aliens, stats, sc, bonuses):  # Nic
     # + Nick 12 05
     bonuses.update()
     bonuses.draw(screen)
-    bonuses_catch(ship, bonuses, stats)
+    bonuses_catch(ship, bonuses, stats, sc)
     # - Nick 12 05
 
     pygame.display.flip()
@@ -103,6 +102,10 @@ def update_bullets (screen, aliens, bullets, stats, sc, bonuses):
     if len(aliens) == 0:
         # + Dima 11 05
         bullets.empty()
+        #
+        # переход на новый уровень
+        #
+        time.sleep(1)
         create_army(screen, aliens)
         # - Dima 11 05
 
@@ -160,12 +163,13 @@ def create_army(screen, aliens):
 # + Nick 10 05
 # столкновение пришельцев с кораблем
 # + Nick 12 05
-def bonuses_catch(ship, bonuses, stats):
+def bonuses_catch(ship, bonuses, stats, sc):
     for bonus in bonuses:
         if pygame.sprite.collide_mask(ship, bonus):
             if bonus.type == 'extra_life':
                 if stats.lifes < 5:
                     stats.lifes += 1
+                    sc.image_ships()
             if bonus.type == 'super_gun':
                 if ship.bonus_guns > 10 or ship.bonus_guns == 0:
                     ship.bonus_guns += 10
@@ -173,6 +177,7 @@ def bonuses_catch(ship, bonuses, stats):
                     ship.bonus_guns = 20
             bonuses.remove(bonus)
 # - Nick 12 05
+
 def ship_death(stats, aliens, screen, ship, bullets, sc, bonuses):
     # + Dima 11 05
     if (stats.lifes > 0):
@@ -200,4 +205,3 @@ def check_high_score(stats, sc):
         with open('highscore.txt', 'w') as f:
             f.write(str(stats.high_score))
 # - Dima 11 05
-
