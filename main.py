@@ -39,7 +39,7 @@ def run():
         # - Nick 08 05
         controls.update(bg_color, screen, ship, bullets, aliens)
         # + Dima 09 05
-        controls.update_bullets(aliens, bullets)
+        controls.update_bullets(screen, aliens, bullets)
         controls.update_aliens(ship, aliens, stats, bullets, screen)
         # + Dima 09 05
         # + Nick 10 05
