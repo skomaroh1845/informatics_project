@@ -49,7 +49,7 @@ def update (bg_color, screen, ship, bullets, aliens):  # Nick 08 05 added parame
 # - Dima 08 05
 
 # + Dima 09 05
-def update_bullets (aliens, bullets):
+def update_bullets (screen, aliens, bullets):
     # обновляет позиции пуль и удаляет их
     bullets.update()
     for bullet in bullets.copy():
@@ -60,7 +60,10 @@ def update_bullets (aliens, bullets):
 
     # если всех убили, создаем новых
     if len(aliens) == 0:
-        pass  # дописать 
+        # + Dima 11 05
+        bullets.empty()
+        create_army(screen, aliens)
+        # - Dima 11 05
 
     # - Nick 10 05
 # - Dima 09 05
@@ -73,9 +76,19 @@ def update_aliens (ship, aliens, stats, bullets, screen):
     for alien in aliens:
         if pygame.sprite.collide_mask(ship, alien):
             ship_death(stats, aliens, screen, ship, bullets)
-    aliens_check(stats, screen, ship, aliens, bullets)
+    aliens_check(stats, aliens, screen, ship, bullets)
     # - Nick 10 05
 # - Dima 09 05
+
+# + Dima 11 05
+# проверяем, добрался ли хоть кто-то до края экрана
+def aliens_check (stats, aliens, screen, ship, bullets):
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            ship_death(stats, aliens, screen, ship, bullets)
+            break
+# - Dima 11 05
 
 # + Nick 08 05
 # создание армии пришельцев
@@ -108,9 +121,5 @@ def ship_death(stats, aliens, screen, ship, bullets):
     aliens.empty()
     create_army(screen, aliens)
     ship.reset()
-
-# проверка, дошли ли пришельцы до края
-def aliens_check(stats, screen, ship, aliens, bullets):
-    pass
 
 # - Nick 10 05
