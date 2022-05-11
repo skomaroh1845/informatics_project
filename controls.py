@@ -117,17 +117,17 @@ def update_aliens (ship, aliens, stats, bullets, screen, sc, bonuses):
     for alien in aliens:
         if pygame.sprite.collide_mask(ship, alien):
             ship_death(stats, aliens, screen, ship, bullets, sc, bonuses)
-    aliens_check(stats, aliens, screen, ship, bullets, sc)
+    aliens_check(stats, aliens, screen, ship, bullets, sc, bonuses)
     # - Nick 10 05
 # - Dima 09 05
 
 # + Dima 11 05
 # проверяем, добрался ли хоть кто-то до края экрана
-def aliens_check (stats, aliens, screen, ship, bullets, sc):
+def aliens_check (stats, aliens, screen, ship, bullets, sc, bonuses):
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
-            ship_death(stats, aliens, screen, ship, bullets, sc)
+            ship_death(stats, aliens, screen, ship, bullets, sc, bonuses)
             break
 # - Dima 11 05
 
@@ -173,7 +173,6 @@ def bonuses_catch(ship, bonuses, stats):
                     ship.bonus_guns = 20
             bonuses.remove(bonus)
 # - Nick 12 05
-=======
 def ship_death(stats, aliens, screen, ship, bullets, sc, bonuses):
     # + Dima 11 05
     if (stats.lifes > 0):
