@@ -3,6 +3,7 @@ import controls
 from star_ship import StarShip
 from pygame.sprite import Group
 from game_stats import Stats
+from scores import Scores # added by Dima 11 05
 
 
 # + Nick 07 05
@@ -30,6 +31,10 @@ def run():
     stats = Stats()
     # - Nick 10 05
 
+    # + Dima 11 05
+    sc = Scores(screen, stats)
+    # - Dima 11 05
+
     # цикл
     while True:
         controls.events(screen, ship, bullets)
@@ -39,10 +44,10 @@ def run():
             # + Nick 08 05
             bullets.update()
             # - Nick 08 05
-            controls.update(bg_color, screen, ship, bullets, aliens)
+            controls.update(bg_color, screen, ship, bullets, aliens, stats, sc)
             # + Dima 09 05
-            controls.update_bullets(screen, aliens, bullets)
-            controls.update_aliens(ship, aliens, stats, bullets, screen)
+            controls.update_bullets(screen, aliens, bullets, stats,  sc)
+            controls.update_aliens(ship, aliens, stats, bullets, screen, sc)
             # + Dima 09 05
             # + Nick 10 05
             clock.tick(60)  # 60 FPS
