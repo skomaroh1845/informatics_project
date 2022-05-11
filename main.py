@@ -33,18 +33,21 @@ def run():
     # цикл
     while True:
         controls.events(screen, ship, bullets)
-        ship.update_ship()
-        # + Nick 08 05
-        bullets.update()
-        # - Nick 08 05
-        controls.update(bg_color, screen, ship, bullets, aliens)
-        # + Dima 09 05
-        controls.update_bullets(screen, aliens, bullets)
-        controls.update_aliens(ship, aliens, stats, bullets, screen)
-        # + Dima 09 05
-        # + Nick 10 05
-        clock.tick(60)  # 60 FPS
-        # - Nick 10 05
+        # + Dima 11 05
+        if stats.run_game:
+            ship.update_ship()
+            # + Nick 08 05
+            bullets.update()
+            # - Nick 08 05
+            controls.update(bg_color, screen, ship, bullets, aliens)
+            # + Dima 09 05
+            controls.update_bullets(screen, aliens, bullets)
+            controls.update_aliens(ship, aliens, stats, bullets, screen)
+            # + Dima 09 05
+            # + Nick 10 05
+            clock.tick(60)  # 60 FPS
+            # - Nick 10 05
+        # - Dima 11 05
 
 
 if __name__ == '__main__':

@@ -26,7 +26,7 @@ class Alien(pygame.sprite.Sprite):
     # движение
     def update(self):
         # + Dima 09 05
-        self.y += 0.2
+        self.y += 1
         self.rect.y = self.y
         # - Dima 09 05
 

@@ -3,6 +3,7 @@ import sys
 from bullet import Bullet
 from alien import Alien
 import time
+from game_stats import Stats
 
 
 # обработка событий
@@ -115,11 +116,18 @@ def create_army(screen, aliens):
 # + Nick 10 05
 # столкновение пришельцев с кораблем
 def ship_death(stats, aliens, screen, ship, bullets):
-    stats.lifes -= 1
-    time.sleep(1)
-    bullets.empty()
-    aliens.empty()
-    create_army(screen, aliens)
-    ship.reset()
+    # + Dima 11 05
+    if (stats.lifes > 0):
+        stats.lifes -= 1
+        time.sleep(1)
+        bullets.empty()
+        aliens.empty()
+        create_army(screen, aliens)
+        ship.reset()
+    else:
+        stats.run_game = False
+        sys.exit()
+    # - Dima 11 05
+
 
 # - Nick 10 05
