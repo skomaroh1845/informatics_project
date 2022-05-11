@@ -34,8 +34,9 @@ def events(screen, ship, bullets):  # Nick 08 05 added parameters: screen, bulle
 
 # + Dima 08 05
 # функция, делающая обновление экрана
-def update (bg_color, screen, ship, bullets, aliens):  # Nick 08 05 added parameters: screen, bullets
+def update (bg_color, screen, ship, bullets, aliens, stats, sc):  # Nick 08 05 added parameters: screen, bullets
     screen.fill(bg_color)
+    sc.show_score()
     # + Nick 08 05
     for bullet in bullets.sprites():
         bullet.draw_bullet()
@@ -50,7 +51,7 @@ def update (bg_color, screen, ship, bullets, aliens):  # Nick 08 05 added parame
 # - Dima 08 05
 
 # + Dima 09 05
-def update_bullets (screen, aliens, bullets):
+def update_bullets (screen, aliens, bullets, stats, sc):
     # обновляет позиции пуль и удаляет их
     bullets.update()
     for bullet in bullets.copy():
@@ -58,6 +59,15 @@ def update_bullets (screen, aliens, bullets):
             bullets.remove(bullet)
     # + Nick 10 05
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+
+    # + Dima 11 05
+    if collisions:
+        for aliens in collisions.values():
+            stats.score += 10*len(aliens)
+        sc.image_score()
+        check_high_score(stats, sc)
+        sc.image_ships()
+    # - Dima 11 05
 
     # если всех убили, создаем новых
     if len(aliens) == 0:
@@ -70,24 +80,24 @@ def update_bullets (screen, aliens, bullets):
 # - Dima 09 05
 
 # + Dima 09 05
-def update_aliens (ship, aliens, stats, bullets, screen):
+def update_aliens (ship, aliens, stats, bullets, screen, sc):
     # обновляет позиции пришельцев
     aliens.update()
     # + Nick 10 05
     for alien in aliens:
         if pygame.sprite.collide_mask(ship, alien):
-            ship_death(stats, aliens, screen, ship, bullets)
-    aliens_check(stats, aliens, screen, ship, bullets)
+            ship_death(stats, aliens, screen, ship, bullets, sc)
+    aliens_check(stats, aliens, screen, ship, bullets, sc)
     # - Nick 10 05
 # - Dima 09 05
 
 # + Dima 11 05
 # проверяем, добрался ли хоть кто-то до края экрана
-def aliens_check (stats, aliens, screen, ship, bullets):
+def aliens_check (stats, aliens, screen, ship, bullets, sc):
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
-            ship_death(stats, aliens, screen, ship, bullets)
+            ship_death(stats, aliens, screen, ship, bullets, sc)
             break
 # - Dima 11 05
 
@@ -115,7 +125,7 @@ def create_army(screen, aliens):
 
 # + Nick 10 05
 # столкновение пришельцев с кораблем
-def ship_death(stats, aliens, screen, ship, bullets):
+def ship_death(stats, aliens, screen, ship, bullets, sc):
     # + Dima 11 05
     if (stats.lifes > 0):
         stats.lifes -= 1
@@ -124,6 +134,7 @@ def ship_death(stats, aliens, screen, ship, bullets):
         aliens.empty()
         create_army(screen, aliens)
         ship.reset()
+        sc.image_ships()
     else:
         stats.run_game = False
         sys.exit()
@@ -131,3 +142,12 @@ def ship_death(stats, aliens, screen, ship, bullets):
 
 
 # - Nick 10 05
+
+# + Dima 11 05
+def check_high_score(stats, sc):
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        sc.image_high_score()
+        with open('highscore.txt', 'w') as f:
+            f.write(str(stats.high_score))
+# - Dima 11 05
