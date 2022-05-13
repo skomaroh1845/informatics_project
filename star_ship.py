@@ -5,10 +5,13 @@ from pygame.sprite import Sprite
 class StarShip(Sprite):
 
     # инициализация
-    def __init__(self, screen):
+    def __init__(self, screen, size='big'):
         super(StarShip, self).__init__()
         self.screen = screen
-        self.image = pygame.image.load('images/star_ship_small.png')
+        if size == 'big':
+            self.image = pygame.image.load('images/star_ship.png')
+        elif size == 'small':
+            self.image = pygame.image.load('images/star_ship_small.png')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx
