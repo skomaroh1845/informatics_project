@@ -20,6 +20,7 @@ class Interface():
                      'GJ': 'Good job, you beat them!',
                      'B': 'But that is not all...',
                      'GL': 'Good luck!',
+                     'last': 'Last one!',
                      'win': 'You saved the Earth!',
                      'L': 'Aliens beat you!'}
         self.what_now = None
@@ -48,6 +49,9 @@ class Interface():
         # text
         if lvl == '1':
             self.interface_image('GL', self.screen_rect.centerx, self.screen_rect.centery, self.text_color, 'small')
+            self.screen.blit(self.text_img, self.text_rect)
+        elif lvl == '5':
+            self.interface_image('last', self.screen_rect.centerx, self.screen_rect.centery, self.text_color, 'small')
             self.screen.blit(self.text_img, self.text_rect)
         else:
             self.interface_image('GJ', self.screen_rect.centerx, self.screen_rect.centery, self.text_color, 'small')

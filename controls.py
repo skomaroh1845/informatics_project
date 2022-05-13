@@ -128,6 +128,7 @@ def update_bullets (screen, aliens, bullets, stats, sc, bonuses, game_interface)
     if len(aliens) == 0:
         # + Dima 11 05
         bullets.empty()
+        bonuses.empty()
         # + Nick 13 05
         stats.lvl += 1
         if stats.lvl > 5:
