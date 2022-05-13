@@ -5,7 +5,7 @@ class Stats():
     # инициализация статистики
     def __init__(self):
         self.update_stats()
-        self.run_game = True
+        self.run_game = False
         with open('highscore.txt', 'r') as f:
             self.high_score = int(f.readline())
 
@@ -13,3 +13,6 @@ class Stats():
     def update_stats(self):
         self.lifes = 1
         self.score = 0
+        self.win = False
+        self.lose = False
+        self.lvl = 1

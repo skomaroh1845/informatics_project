@@ -4,7 +4,8 @@ from star_ship import StarShip
 from pygame.sprite import Group
 from game_stats import Stats
 from scores import Scores # added by Dima 11 05
-
+from interface import Interface
+import time  # для отладки
 
 # + Nick 07 05
 # функция запуска игры
@@ -33,6 +34,8 @@ def run():
 
     # + Nick 12 05
     bonuses = Group()
+    game_interface = Interface(screen)
+
     # - Nick 12 05
 
     # + Dima 11 05
@@ -41,7 +44,17 @@ def run():
 
     # цикл
     while True:
-        controls.events(screen, ship, bullets)
+        controls.events(screen, ship, bullets, game_interface, stats, bonuses, sc)
+        # + Nick 13 05
+        if not stats.run_game:
+            if stats.win:
+                game_interface.win()
+            elif stats.lose:
+                game_interface.lose()
+            else:
+                game_interface.menu()
+            pygame.display.flip()
+        # - Nick 13 05
         # + Dima 11 05
         if stats.run_game:
             ship.update_ship()
@@ -50,14 +63,13 @@ def run():
             # - Nick 08 05
             controls.update(bg_color, screen, ship, bullets, aliens, stats, sc, bonuses)
             # + Dima 09 05
-            controls.update_bullets(screen, aliens, bullets, stats,  sc, bonuses)
-            controls.update_aliens(ship, aliens, stats, bullets, screen, sc, bonuses)
-            # + Dima 09 05
-            # + Nick 10 05
-            clock.tick(60)  # 60 FPS
-            # - Nick 10 05
+            controls.update_bullets(screen, aliens, bullets, stats,  sc, bonuses, game_interface)
+            controls.update_aliens(ship, aliens, stats, bullets, screen, sc, bonuses, game_interface)
+            # - Dima 09 05
         # - Dima 11 05
-
+        # + Nick 10 05
+        clock.tick(60)  # 60 FPS
+        # - Nick 10 05
 
 if __name__ == '__main__':
     run()
