@@ -130,7 +130,7 @@ def update_bullets (screen, aliens, bullets, stats, sc, bonuses, game_interface)
         bullets.empty()
         # + Nick 13 05
         stats.lvl += 1
-        if stats.lvl > 1:
+        if stats.lvl > 5:
             game_interface.win()
             pygame.display.flip()
             stats.win = True
