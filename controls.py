@@ -35,6 +35,7 @@ def events(screen, ship, bullets, game_interface, stats, bonuses, sc):
                 if ship.bonus_guns > 10:
                     bullets.add(Bullet(screen, ship, shift=30))
                     bullets.add(Bullet(screen, ship, shift=-30))
+                stats.bonus_bullets = ship.bonus_guns
             # - Nick 08 05
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
@@ -210,6 +211,8 @@ def bonuses_catch(ship, bonuses, stats, sc):
                     ship.bonus_guns += 10
                 else:
                     ship.bonus_guns = 20
+                stats.bonus_bullets = ship.bonus_guns
+                sc.image_score()
             bonuses.remove(bonus)
 # - Nick 12 05
 

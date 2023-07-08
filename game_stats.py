@@ -16,3 +16,4 @@ class Stats():
         self.win = False
         self.lose = False
         self.lvl = 1
+        self.bonus_bullets = 0

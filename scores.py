@@ -16,7 +16,7 @@ class Scores():
         self.image_ships()
 
     def image_score(self):
-        self.score_img = self.font.render('Score: ' + str(self.stats.score), True, self.text_color, (0,0,0))
+        self.score_img = self.font.render('Scr: ' + str(self.stats.score) + ' Bul: ' + str(self.stats.bonus_bullets), True, self.text_color, (0,0,0))
         self.score_rect = self.score_img.get_rect()
         self.score_rect.right = self.screen_rect.right - 40
         self.score_rect.top = 20
